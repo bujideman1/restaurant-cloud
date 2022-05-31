@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.restaurant.mapper.WaiterMapper">
+<select id="getReadyFoodByTableId" resultType="com.order.restaurant.entities.FoodBody">
+select o.food_id,f.food_name,food_num,taste,f.price from orderinfo o left join foodinfo f on o.food_id = f.food_id
+where table_id=#{table_id} and o.order_status='start';
+</select>
+    <select id="getAllDoneFoodByTableId" resultType="com.order.restaurant.entities.FoodBody">
+        select o.food_id,f.food_name,food_num,taste,f.price from orderinfo o left join foodinfo f on o.food_id = f.food_id
+where table_id=#{table_id} and o.order_status='done';
+    </select>
+    <update id="readyOrder">
+        update orderinfo set order_status='ready' where order_id=#{order_id};
+    </update>
+    <update id="complateOrder">
+        update orderinfo set order_status='done' where order_id=#{order_id};
+    </update>
+    <update id="cancelOrder">
+        update orderinfo set order_status='cancel' where order_id=#{order_id};
+    </update>
+    <update id="finishOrder">
+        update orderinfo set order_status='end' where table_id=#{table_id};
+    </update>
+</mapper>
